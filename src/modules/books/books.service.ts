@@ -10,7 +10,10 @@ import { BookUpdateDto } from './dtos/book.update.dto';
 
 export const createBook = async ({ authorId, ...bookDto }: BookCreateDto) => {
   // Tries to find an author entity by given Id, throws error if it fails to find
+  console.log(authorId);
+  console.log(Author);
   const author = await Author.findById(authorId);
+  console.log(author);
   if (!author)
     throw new ServerError(ServerErrorType.WAS_NOT_FOUND, 'Author', authorId);
 
@@ -72,7 +75,7 @@ export const updateBook = async (id: string, body: BookUpdateDto) => {
   try {
     const updateBody = { ...body };
     // Populate author property if the authorId is provided and valid
-    if (body.authorId) updateBody['authorId'] = body.authorId;
+    if (body.authorId) updateBody['author'] = body.authorId;
 
     // Try to update book, if returning model is null throw error
     const model = await Book.findByIdAndUpdate(id, updateBody, {

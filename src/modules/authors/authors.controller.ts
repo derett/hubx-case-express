@@ -4,7 +4,7 @@ import * as service from './authors.service';
 
 export const createAuthor = async (req: Request, res: Response) => {
   const author = await service.createAuthor(req.body);
-  res.json(author);
+  res.status(201).json(author);
 };
 
 export const listAuthors = async (_: Request, res: Response) => {

@@ -4,7 +4,7 @@ import * as service from './books.service';
 
 export const createBook = async (req: Request, res: Response) => {
   const book = await service.createBook(req.body);
-  res.json(book);
+  res.status(201).json(book);
 };
 
 export const listBooks = async (_: Request, res: Response) => {
