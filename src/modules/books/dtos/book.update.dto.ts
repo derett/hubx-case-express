@@ -1,6 +1,35 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
+/**
+ * @openapi
+ * components:
+ *   dtos:
+ *     BookUpdateDto:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           default: "Titans"
+ *         authorId:
+ *           type: string
+ *         price:
+ *           type: number
+ *           default: 1
+ *         ISBN:
+ *           type: string
+ *           default: "1"
+ *         language:
+ *           type: string
+ *           default: "TR"
+ *         numberOfPages:
+ *           type: number
+ *           default: 12
+ *         publisher:
+ *           type: string
+ *
+ */
+
 export const bookUpdateDtoSchema = z.object({
   title: z.string().optional(),
   price: z.number().optional(),

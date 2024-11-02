@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import * as pc from 'picocolors';
 
 import bodyParser from 'body-parser';
@@ -29,7 +29,14 @@ async function bootstrap() {
   }
 
   app.use(bodyParser.json());
-  app.use('/doc', swaggerUi.serve, swaggerUi.setup(specs));
+
+  if (process.env.NODE_ENV !== 'test') {
+    app.use('/doc', swaggerUi.serve, swaggerUi.setup(specs));
+    app.get('docs.json', (req: Request, res: Response) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(specs);
+    });
+  }
 
   app.use('/books', booksRouter);
   app.use('/authors', authorsRouter);

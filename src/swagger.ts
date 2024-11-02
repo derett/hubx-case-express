@@ -1,16 +1,20 @@
 import swaggerJSDoc from 'swagger-jsdoc';
-import * as swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 
-const specs = swaggerJSDoc({
+import { version } from '../package.json';
+
+const options: swaggerJSDoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
       title: 'Hubx Case Study',
-      description: 'API Service fro Books and Authors',
-      version: '1.0.0',
+      description: 'API Service for Books and Authors',
+      version,
     },
   },
-  apis: ['./modules/**/*.controller.ts'],
-});
+  apis: ['./**/*.router.ts', './**/*.schema.ts', './**/*.dto.ts'],
+};
+
+const specs = swaggerJSDoc(options);
 
 export { specs, swaggerUi };

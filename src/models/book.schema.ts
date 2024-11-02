@@ -8,6 +8,34 @@
 
 import mongoose, { Schema } from 'mongoose';
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BookResponse:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         title:
+ *           type: string
+ *         author:
+ *           type: string
+ *         price:
+ *           type: number
+ *         ISBN:
+ *           type: string
+ *         language:
+ *           type: string
+ *         numberOfPages:
+ *           type: number
+ *         publisher:
+ *           type: string
+ *         __v:
+ *           type: number
+ *
+ */
+
 export const bookSchema = new Schema({
   title: { type: String, unique: true, required: true },
   author: {
