@@ -2,12 +2,12 @@
 
 [Back to README](README.md)
 
-It's first time for me to use MongoDB and Docker in a project. I am used to PostgreSQL, Sequelize ORM. So there might be some misusages for both Mongo and Docker, but as I tested by Postman, Unit and e2e tests, trying docker container on a different computer they were both working as expected.
+It's first time for me to use MongoDB and Docker in a project. I am used to PostgreSQL, Sequelize ORM. So there might be some misusages for both Mongo and Docker, but as I tested by Postman, e2e tests, trying docker container on a different computer they were both working as expected.
 
 ## Requirements are met:
 
 - A Readme(README.md) file is provided with necessary instructions
-- Written in NodeJS with NestJS Framework
+- Written in NodeJS
 - MongoDB used as database
 - Can be composed into a Docker container
 
