@@ -10,10 +10,7 @@ import { BookUpdateDto } from './dtos/book.update.dto';
 
 export const createBook = async ({ authorId, ...bookDto }: BookCreateDto) => {
   // Tries to find an author entity by given Id, throws error if it fails to find
-  console.log(authorId);
-  console.log(Author);
   const author = await Author.findById(authorId);
-  console.log(author);
   if (!author)
     throw new ServerError(ServerErrorType.WAS_NOT_FOUND, 'Author', authorId);
 
@@ -77,10 +74,28 @@ export const updateBook = async (id: string, body: BookUpdateDto) => {
     // Populate author property if the authorId is provided and valid
     if (body.authorId) updateBody['author'] = body.authorId;
 
+    const bookToUpdate = await Book.findById(id);
+    if (!bookToUpdate) {
+      throw new ServerError(ServerErrorType.WAS_NOT_FOUND, 'Book', id);
+    }
+
+    const currentAuthorId = bookToUpdate.author;
+
     // Try to update book, if returning model is null throw error
     const model = await Book.findByIdAndUpdate(id, updateBody, {
       new: true,
     });
+
+    // If request tries to update author of the book. Remove book from the current authors list and add to new authors list
+    if (body.authorId && currentAuthorId) {
+      await Author.findByIdAndUpdate(currentAuthorId, {
+        $pull: { books: id },
+      });
+
+      await Author.findByIdAndUpdate(body.authorId, {
+        $addToSet: { books: id },
+      });
+    }
 
     if (!model) {
       throw new ServerError(ServerErrorType.WAS_NOT_FOUND, 'Book', id);
@@ -94,5 +109,17 @@ export const updateBook = async (id: string, body: BookUpdateDto) => {
 };
 
 export const deleteBook = async (id: string) => {
+  // Find book to be deleted
+  const book = await Book.findById(id);
+  if (!book) {
+    throw new ServerError(ServerErrorType.WAS_NOT_FOUND, 'Book', id);
+  }
+
+  // Delete book
   await Book.deleteOne({ _id: id });
+
+  // Remove the book ID from the author's books array
+  await Author.findByIdAndUpdate(book.author, {
+    $pull: { books: id },
+  });
 };

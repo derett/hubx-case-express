@@ -3,6 +3,7 @@
 // Birth Date
 
 import mongoose, { Schema } from 'mongoose';
+import { Book } from './book.schema';
 
 /**
  * @openapi
@@ -29,6 +30,17 @@ export const authorSchema = new Schema({
   country: { type: String, required: false },
   birthDate: { type: String, required: false },
   books: { type: [{ type: mongoose.Schema.Types.ObjectId }], ref: 'Book' },
+});
+
+authorSchema.pre('deleteOne', async function (next) {
+  const author = this.getQuery();
+  try {
+    // Delete all books associated with this author
+    await Book.deleteMany({ author: author._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 export const Author = mongoose.model('Author', authorSchema);
