@@ -37,11 +37,11 @@ docker compose up
 ## Tests
 
 ```bash
-# e2e tests
-$ npm run test:e2e
+# tests
+$ npm run test
 
-# test coverage e2e tests
-$ npm run test:e2e:cov
+# test coverage
+$ npm run test:cov
 ```
 
 ## Swagger Documentation

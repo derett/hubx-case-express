@@ -8,9 +8,9 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon",
     "start:prod": "node ./dist/src/index.js",
-    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json",
-    "test:e2e:watch": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --watch",
-    "test:e2e:cov": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --coverage"
+    "test": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json",
+    "test:watch": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --watch",
+    "test:cov": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --coverage"
   },
   "keywords": [],
   "author": "",
